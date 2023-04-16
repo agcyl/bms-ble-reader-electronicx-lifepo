@@ -137,7 +137,7 @@ The general workflow is quite simple:
    
    Each pair of bytes contains the voltage per cell (in this example there are only 4 cells present (12V-LiFoPo4):  
    
-   __``0C B2``__ in decimal __``3250``__ divided by __``1000``__ means the first cell has a voltage of __``3.250V``__ 
+   __``0C B2``__ in decimal __``3250``__ divided by __``1000``__ means the first cell has a voltage of __``3.250V``__   
    adding the other 3 cells with __``3.258 + 3.259 + 3.254``__ we get the overall voltage of __``13.021V``__.
    
    
