@@ -140,7 +140,19 @@ The general workflow is quite simple:
    __``0C B2``__ in decimal __``3250``__ divided by __``1000``__ means the first cell has a voltage of __``3.250V``__   
    adding the other 3 cells with __``3.258 + 3.259 + 3.254``__ we get the overall voltage of __``13.021V``__.
    
+   ### Charge- / Discharge cycles
    
+    ``00``  ``82``  ``31``  ``00``  ``8C``  ``00``  ``00``  ``00``  ``00``  ``00``     
+    ``00``  ``00``  ``0C``  ``B2``  ``0C``  ``BA``  ``0C``  ``BB``  ``0C``  ``B6``  
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``B4``  ``00``  ``00``  ``3D``  ``3D``   
+    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``   __``00``  ``31``__  ``00``   
+    ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``  ``B6``
+    
+    The byte on position 58/58 represent the charge-/discarge-cyclesof the battery means  __``00 31``__ in decimal __``49``__
+    
+    
    
    
    
