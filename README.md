@@ -92,15 +92,15 @@ The general workflow is quite simple:
    The above response is the ASCII representation of 70 bytes payload - each byte is a character e.g. 3a 30 30 38 32 33 31  is :008231
    
    so the whole payload translates to
-     ```
-    :008231008C000000000
-    000000CB20CBA0CBB0CB
-    60000000000000000000
-    00000000000000000000
-    00000000000B400003D3
-    D3D3DF00000137600310
+     ```  
+    :008231008C000000000   
+    000000CB20CBA0CBB0CB   
+    60000000000000000000   
+    00000000000000000000   
+    00000000000B400003D3   
+    D3D3DF00000137600310   
     00011014007D007D0B6~
-    ```
+    ```  
    ## Interpreting the payload
    
    ### Packet framing 
@@ -110,7 +110,13 @@ The general workflow is quite simple:
    Even if the start and stop bytes are correct, it happens very often with BLE-packets, that there are transmission errors! 
    To be (relatively) sure, that we received what the BMS sent, the last byte before the stop-character represents a checksum.
    
-   The "algorithm" used is the same that MODBUS-ASCII uses (again a similarity): **longitudinal redundancy check**
+   The "algorithm" used is the same that MODBUS-ASCII uses (again a similarity): **longitudinal redundancy check**:
+   
+   All ASCII-bytes of the payload, except the start-byte ':' and the last three bytes (2 digits for 1 byte checksum) and the stop-byte '~' are added into one byte (skipping the overflow) the 'result' will then be XOR-ed with 0xFF.
+   
+   
+   
+   
    
    # to be continued
 
