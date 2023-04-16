@@ -92,15 +92,15 @@ The general workflow is quite simple:
    The above response is the ASCII representation of 70 bytes payload - each byte is a character e.g. 3a 30 30 38 32 33 31  is :008231
    
    so the whole payload translates to
-     ```  
-    :008231008C000000000   
-    000000CB20CBA0CBB0CB   
-    600000```**```0000```**```0000000000   
-    00000000000000000000   
-    00000000000B400003D3   
-    D3D3DF00000137600310   
-    00011014007D007D0B6~
-    ```  
+       
+    ``:008231008C000000000``     
+    ``000000CB20CBA0CBB0CB``  
+    ``60000000000000000000``   
+    ``00000000000000000000``   
+    ``00000000000B400003D3``   
+    ``D3D3DF00000137600310``   
+    ``00011014007D007D0B6~``  
+      
    ## Interpreting the payload
    
    ### Packet framing 
@@ -110,9 +110,37 @@ The general workflow is quite simple:
    Even if the start and stop bytes are correct, it happens very often with BLE-packets, that there are transmission errors! 
    To be (relatively) sure, that we received what the BMS sent, the last byte before the stop-character represents a checksum.
    
+    ``00``  ``82``  ``31``  ``00``  ``8C``  ``00``  ``00``  ``00``  ``00``  ``00``     
+    ``00``  ``00``  ``0C``  ``B2``  ``0C``  ``BA``  ``0C``  ``BB``  ``0C``  ``B6``  
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``B4``  ``00``  ``00``  ``3D``  ``3D``   
+    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``  ``00``  ``31``  ``00``   
+    ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``   __``B6``__
+   
+   
    The "algorithm" used is the same that MODBUS-ASCII uses (again a similarity): **longitudinal redundancy check**:
    
-   All ASCII-bytes of the payload, except the start-byte ':' and the last three bytes (2 digits for 1 byte checksum) and the stop-byte '~' are added into one byte (skipping the overflow) the 'result' will then be XOR-ed with 0xFF.
+   All ASCII-bytes of the payload, except the start-byte ':' and the last three bytes (2 digits for 1 byte checksum) and the stop-byte '~' are added into one byte (skipping the overflow) the 'result' will then be XOR-ed with 0xFF.  
+   
+   ### Voltage
+   
+   Looking at the Android/IOS App the BMS is able to handle 4 up to 16 LiFoPo-Cells - this is represented in the payload:
+   
+    ``00``  ``82``  ``31``  ``00``  ``8C``  ``00``  ``00``  ``00``  ``00``  ``00``     
+    ``00``  ``00``   __``0C``  ``B2``  ``0C``  ``BA``  ``0C``  ``BB``  ``0C``  ``B6``  
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``__   ``00``  ``B4``  ``00``  ``00``  ``3D``  ``3D``   
+    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``  ``00``  ``31``  ``00``   
+    ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``  ``B6``
+   
+   Each pair of bytes contains the voltage per cell (in this example there are only 4 cells present (12V-LiFoPo4):  
+   
+   __``0C B2``__ in decimal __``3250``__ divided by __``1000``__ means the first cell has a voltage of __``3.250V``__ 
+   adding the other 3 cells with __``3.258 + 3.259 + 3.254``__ we get the overall voltage of __``13.021V``__.
+   
+   
    
    
    
