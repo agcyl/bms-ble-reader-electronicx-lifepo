@@ -119,9 +119,9 @@ The general workflow is quite simple:
     ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``   __``B6``__
    
    
-   The "algorithm" used is the same that MODBUS-ASCII uses (again a similarity): **longitudinal redundancy check**:
+   The "algorithm" used is the same that MODBUS-ASCII uses: **longitudinal redundancy check**:
    
-   All ASCII-bytes of the payload, except the start-byte ':' and the last three bytes (2 digits for 1 byte checksum) and the stop-byte '~' are added into one byte (skipping the overflow) the 'result' will then be XOR-ed with 0xFF.  
+   All ASCII-bytes of the payload, except the start-byte ':' and the last three bytes (2 digits for 1 byte checksum) and the stop-byte '~' are added into one byte (skipping the overflow) - the 'result' will then be XOR-ed with 0xFF.  
    
    ### Voltage
    
