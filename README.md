@@ -154,25 +154,71 @@ The general workflow is quite simple:
     The two bytes on position 58/59 represent the charge-/discarge-cycles of the battery - means  __``00 31``__ in decimal __``49``__ cycles.
     
     
-   
-  ### Current in and out
-   
+    ### Current in and out 
+    
     ``00``  ``82``  ``31``  ``00``  ``8C``  ``00``  ``00``  ``00``  ``00``  ``00``     
     ``00``  ``00``  ``0C``  ``B2``  ``0C``  ``BA``  ``0C``  ``BB``  ``0C``  ``B6``  
     ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
     ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
     ``00``  ``00``  ``00``  ``00``   __``00``  ``B4``  ``00``  ``00``__   ``3D``  ``3D``   
-    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``  ``00``  ``31``  ``00``   
-    ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``  ``B6`` 
+    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``  ``00``  ``31`` ``00``   
+    ``00``  ``11``  ``01``  ``40``  ``07``  ``D0``  ``07``  ``D0``  ``B6``
+        
+   the current is split in two values:  
+   
+   charging the battery (IN) are bytee  __``44 / 45``__ : __``00 B4``__ in decimal  __``180``__ divided by 100 mean __``1.80 A ``__ .  
+   the bytes __``46 / 47``__ represent the discarging current !
+ 
+   BUT life would be too easy:
+   
+   When analyzing the data and comparing to the APP-display, there were (seems like) occasional jumps.  
+     
+   I could identify one pattern:  
+
+   If the value % 10 (modulo) is zero, the value can be interpreted like above - but when the result is  __``8``__  then  
+   a cruel logic happens:  
+   
+   if the value is < 600 AND > 1000  the value of 0x70 needs to be added.
+   if the value is > 600 AND < 1000  the value of 0x700 needs to be added.
+   
+   The values are not exact, but fit into my time-line analyses !
+
+   e.g.
+   
+   0x210 ->   528  -> 0x210+0x70  =  0x280 ->  640  -> 6.4 A
+   0x260 ->   608  -> 0x260+0x700 =  0x960 ->  2400 -> 24.0 A
+   
+   for these reading e.g. 6.4 A you will never get a value respresenting 640 ( 0x280 ).
+   
+   I can only "guess" that this might be related with some internal overflow-handling - anyway - it works.
+   
+
+   ### Charged capacity and SoC (State of Charge)
+   
+    ``00``  ``82``  ``31``  ``00``  ``8C``  ``00``  ``00``  ``00``  ``00``  ``00``     
+    ``00``  ``00``  ``0C``  ``B2``  ``0C``  ``BA``  ``0C``  ``BB``  ``0C``  ``B6``  
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``  ``00``   
+    ``00``  ``00``  ``00``  ``00``  ``00``  ``B4``  ``00``  ``00``  ``3D``  ``3D``   
+    ``3D``  ``3D``  ``F0``  ``00``  ``00``  ``13``  ``76``  ``00``  ``31`` ``00``   
+     __``00``  ``11``  ``01``  ``40``__   ``07``  ``D0``  ``07``  ``D0``  ``B6``
+   
+
+    Bytes __``60 / 61``__ show the SoC in percent  __``00 11``__ in decimal  __``17``__  
+    Bytes __``62 / 63``__ repesent the charged capacity in Ah __``01 40``__ in decimal  __``320``  / 10__ -> __``32.0 Ah``__
+    
+    for some values the same login like above (current) applies !
+    
+      
+         
+            
+               
+               
    
    
    
-   
-
-
-
-
-
+    
+    
 
 
 
