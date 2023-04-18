@@ -161,4 +161,62 @@ The general workflow is quite simple:
    
    # to be continued
 
-   
+
+## example code
+
+the attached example is to demonstrate the process.
+
+simply download the file compile with  
+
+**```gcc bluetest.c -o bluetest```**
+
+start the program with  
+
+**```bluetest <your mac-address>```**
+
+if everthing works you will get an output like  
+
+```
+gatttool -b 02:00:09:A0:ED:70 --mtu=23 --char-write-req --handle=0x000f  --value=0100;timeout 1 gatttool --mtu=23  -b 02:00:09:A0:ED:70 --char-write-req --handle=0x0011  --value=3a3030303235303030304530337e0d0a  --listen
+
+--------------------------
+Raw answer from gatttool:
+--------------------------
+
+Characteristic value was written successfully
+Characteristic value was written successfully
+Notification handle = 0x000e value: 3a 30 30 38 32 33 31 30 30 38 43 30 30 30 30 30 30 30 30 30 
+Notification handle = 0x000e value: 30 30 30 30 30 30 43 45 45 30 43 45 44 30 43 45 42 30 43 45 
+Notification handle = 0x000e value: 43 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 
+Notification handle = 0x000e value: 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 
+Notification handle = 0x000e value: 30 30 30 30 30 30 30 30 30 30 31 46 34 30 30 30 30 33 32 33 
+Notification handle = 0x000e value: 32 33 32 33 32 46 30 30 30 30 30 30 36 35 39 30 30 32 42 30 
+Notification handle = 0x000e value: 30 30 30 31 36 30 31 41 34 30 37 44 30 30 37 44 30 41 38 7e 
+
+--------------------------
+Hex Payload:
+--------------------------
+
+00 82 31 00 8C 00 00 00 00 00 
+00 00 0C EE 0C ED 0C EB 0C EC 
+00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 01 F4 00 00 32 32 
+32 32 F0 00 00 06 52 00 2B 00 
+00 16 01 A4 07 D0 07 D0 A8 
+
+--------------------------
+Decoded Values
+--------------------------
+
+SOC:                22 %
+Current capacity    42.0 Ah
+Voltage             13.23 V
+Battery Cycles:     43
+Current out (-)     0.00 A 
+Current in  (+)     5.00 A 
+Temperature:        10.0 C
+
+CS:                 OK
+```
+
