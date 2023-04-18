@@ -1,5 +1,5 @@
 # bmsreader
-A description to readout Electronicx LiFoPo batteries by BLE. 
+A description to readout Electronicx LiFePo batteries via BLE (bluetooth low energy). 
 This repository contains the description to readout the status of LiFoPo batteries from the seller Electronicx - the manufacturer of the builtin BMS (battery management system) ist unknown, but maybe some other resellers use the same BMS.
 
 In general it´s a good idea to allow the monitoring of BMS system with Bluetooth Low Energy with Android or IOS Phones. The downside is, you must be very near to the device. This is fine if you use the battery e.g. in a caravan, but what if it´s somewere in a cellar, garage... ?
@@ -17,7 +17,7 @@ First you need a working "bluez" stack on a linux-box, which comes with the prog
 
 ## How to get BLE-data via gatttool
 
-The general workflow is quite simple:
+The general workflow is quite simple, no pairing to the BMS is required :
 
 1. Identify the BMS using 
 
