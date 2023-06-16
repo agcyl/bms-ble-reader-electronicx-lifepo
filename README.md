@@ -178,11 +178,9 @@ The general workflow is quite simple, no pairing to the BMS is required :
    If the value % 10 (modulo) is zero, the value can be interpreted like above - but when the result is  __``8``__  then  
    a cruel logic happens:  
    
-   if the value is < 600 AND > 1000  the value of 0x70 needs to be added.
-   if the value is > 600 AND < 1000  the value of 0x700 needs to be added.
+   if the value % 10 equals 8 -> 
+      if the value & 0x00f0 equals 0x20 add 0x70 else add 0x700
    
-   The values are not exact, but fit into my time-line analyses !
-
    e.g.
    
    0x210 ->   528  -> 0x210+0x70  =  0x280 ->  640  -> 6.4 A
