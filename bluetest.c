@@ -8,8 +8,8 @@
 
 int checkBatmonNumbers (int val) 
 {
-	if (val%10==8) {
-   	 if (val<600 || val > 1500) 
+	if ((val%10)==8) {
+   	 if ((val & 0x00F0)==0x0020) 
    	 	  return (val+0x70);
    	 else 
    	 	  return (val+0x700);
